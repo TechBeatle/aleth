@@ -87,6 +87,10 @@ void doRlpTests(json_spirit::mValue const& _input)
             bytes payloadToDecode = fromHex(o.at("out").get_str());
             RLP payload(payloadToDecode);
 
+            // treat null rlp as invalid
+            if (payload.isNull())
+                throw std::exception();
+
             // attempt to read all the contents of RLP
             ostringstream() << payload;
 
